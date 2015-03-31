@@ -1,0 +1,25 @@
+1.
+
+A - Odd Sum.
+B - First die is 1.
+C - Sum is 7. 
+
+P(A) = 1/2
+P(B) = 1/6
+P(C) = 1/6
+
+P(A,B) = 1/12
+P(A,C) = 1/6
+P(B,C) =  1/36
+
+P(A)*P(B) = 1/12
+P(A)*P(C) = 1/12
+P(B)*P(C) = 1/36
+
+For any X,Y,  X and Y are independent iff P(X,Y) = P(X)*P(Y).
+
+a) correct
+b) incorrect
+c) incorrect
+
+2.
