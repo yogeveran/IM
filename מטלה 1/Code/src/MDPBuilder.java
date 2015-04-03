@@ -34,10 +34,10 @@ public class MDPBuilder {
 	 * @return an MDP that can be used to generate the utility values detailed
 	 *         
 	 */
-	public static MarkovDecisionProcess<State, DoctorAction> createMDP(
+	public static MarkovDecisionProcess<State, PCPAction> createMDP(
 			final PCPWorld dw) {
 
-		return new MDP<State, DoctorAction>(dw.getStates(),
+		return new MDP<State, PCPAction>(dw.getStates(),
 				dw.getInitialState(), createActionsFunction(dw),
 				createTransitionProbabilityFunction(dw),
 				createRewardFunction());
@@ -52,21 +52,21 @@ public class MDPBuilder {
 	 * @return the set of actions allowed at a particular State. This set will be
 	 *         empty if at a terminal state.
 	 */
-	public static ActionsFunction<State, DoctorAction> createActionsFunction(
+	public static ActionsFunction<State, PCPAction> createActionsFunction(
 			final PCPWorld dw) {
 		final Set<State> terminals = new HashSet<State>();
 		terminals.addAll(dw.getTerminalStates());
 
-		ActionsFunction<State, DoctorAction> af = new ActionsFunction<State, DoctorAction>() {
+		ActionsFunction<State, PCPAction> af = new ActionsFunction<State, PCPAction>() {
 
 			@Override
-			public Set<DoctorAction> actions(State s) {
+			public Set<PCPAction> actions(State s) {
 				// All actions can be performed in each State
 				// (except terminal states)
 				if (terminals.contains(s)) {
 					return Collections.emptySet();
 				}
-				return DoctorAction.actions();
+				return PCPAction.actions();
 			}
 		};
 		return af;
@@ -82,14 +82,14 @@ public class MDPBuilder {
 	 *            the State world from figure 17.1.
 	 * @return the transition probability function as described in figure 17.1.
 	 */
-	public static TransitionProbabilityFunction<State, DoctorAction> createTransitionProbabilityFunction(
+	public static TransitionProbabilityFunction<State, PCPAction> createTransitionProbabilityFunction(
 			final PCPWorld cw) {
-		TransitionProbabilityFunction<State, DoctorAction> tf = new TransitionProbabilityFunction<State, DoctorAction>() {
+		TransitionProbabilityFunction<State, PCPAction> tf = new TransitionProbabilityFunction<State, PCPAction>() {
 			private double[] distribution = new double[] { 0.8, 0.1, 0.1 };
 
 			@Override
 			public double probability(State sDelta, State s,
-					DoctorAction a) {
+					PCPAction a) {
 				double prob = 0;
 
 				List<State> outcomes = possibleOutcomes(s, a);
@@ -110,7 +110,7 @@ public class MDPBuilder {
 			}
 			
 			private List<State> possibleOutcomes(State c,
-					DoctorAction a) {
+					PCPAction a) {
 				// There can be three possible outcomes for the planned action
 				List<State> outcomes = new ArrayList<State>();
 

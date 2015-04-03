@@ -12,31 +12,21 @@ public class State {
 	 * 
 	 */
 	int hour;
-	boolean patients_at_pcp; 
+	Disease patient_status_at_doctor; 
 	int patient_time_left_at_hospital;
+	Disease patient_status_at_hospital; 
 	int healed;
-
-	public int getHour() {
-		return hour;
+	
+	public State(int hour, Disease patient_status_at_doctor,
+			int patient_time_left_at_hospital,
+			Disease patient_status_at_hospital, int healed) {
+		super();
+		this.hour = hour;
+		this.patient_status_at_doctor = patient_status_at_doctor;
+		this.patient_time_left_at_hospital = patient_time_left_at_hospital;
+		this.patient_status_at_hospital = patient_status_at_hospital;
+		this.healed = healed;
 	}
-
-	public boolean isPatients_at_pcp() {
-		return patients_at_pcp;
-	}
-
-	public int getPatient_time_left_at_hospital() {
-		return patient_time_left_at_hospital;
-	}
-
-	public int getHealed() {
-		return healed;
-	}
-
-	public State(int hour, boolean patients_at_pcp, int patient_time_left_at_hospital, int healed) {
-		 this.hour = hour;
-		 this.patients_at_pcp = patients_at_pcp; 
-		 this.patient_time_left_at_hospital = patient_time_left_at_hospital;
-		 this.healed = healed;
-	}
+	
 
 }

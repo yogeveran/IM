@@ -10,12 +10,12 @@ import aima.core.agent.Action;
  * @author eranyogev
  *
  */
-public class DoctorAction implements aima.core.agent.Action {
+public class PCPAction implements aima.core.agent.Action {
 
 	/**
 	 * 
 	 */
-	public DoctorAction() {
+	public PCPAction() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,7 +25,7 @@ public class DoctorAction implements aima.core.agent.Action {
 		return false;
 	}
 
-	public static Set<DoctorAction> actions() {
+	public static Set<PCPAction> actions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
