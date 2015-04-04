@@ -37,8 +37,10 @@ public class MDPBuilder {
 	public static MarkovDecisionProcess<State, PCPAction> createMDP(
 			final PCPWorld dw) {
 
-		return new MDP<State, PCPAction>(dw.getStates(),
-				dw.getInitialState(), createActionsFunction(dw),
+		return new MDP<State, PCPAction>(
+				dw.getStates(), //Too Many States to List.
+				dw.getInitialState(), //Done
+				createActionsFunction(dw),
 				createTransitionProbabilityFunction(dw),
 				createRewardFunction());
 	}
@@ -54,8 +56,7 @@ public class MDPBuilder {
 	 */
 	public static ActionsFunction<State, PCPAction> createActionsFunction(
 			final PCPWorld dw) {
-		final Set<State> terminals = new HashSet<State>();
-		terminals.addAll(dw.getTerminalStates());
+		
 
 		ActionsFunction<State, PCPAction> af = new ActionsFunction<State, PCPAction>() {
 
@@ -63,10 +64,32 @@ public class MDPBuilder {
 			public Set<PCPAction> actions(State s) {
 				// All actions can be performed in each State
 				// (except terminal states)
-				if (terminals.contains(s)) {
+				HashSet<PCPAction> result = new HashSet<PCPAction>();
+				
+				if (isTerminal(s)) {
 					return Collections.emptySet();
 				}
-				return PCPAction.actions();
+				if(needToDiagnose(s)){
+					result.add(new PCPAction(ActionType.Diagnose));
+					return  result;
+				}
+				if(isHospitalFree(s))
+					result.add(new PCPAction(ActionType.SendToHospital));
+				result.add(new PCPAction(ActionType.SendHome));
+				
+				return result;
+			}
+
+			private boolean isHospitalFree(State s) {
+				return s.patient_time_left_at_hospital>0;
+			}
+
+			private boolean needToDiagnose(State s) {
+				return s.getPatient_status_at_doctor().equals(Disease.Unknown);
+			}
+
+			private boolean isTerminal(State s) {
+				return s.getHour() == 14;
 			}
 		};
 		return af;
@@ -87,6 +110,19 @@ public class MDPBuilder {
 		TransitionProbabilityFunction<State, PCPAction> tf = new TransitionProbabilityFunction<State, PCPAction>() {
 			private double[] distribution = new double[] { 0.8, 0.1, 0.1 };
 
+			
+			/**
+			 * Return the probability of going from state s using action a to s' based
+			 * on the underlying transition model P(s' | s, a).
+			 * 
+			 * @param sDelta
+			 *            the state s' being transitioned to.
+			 * @param s
+			 *            the state s being transitions from.
+			 * @param a
+			 *            the action used to move from state s to s'.
+			 * @return the probability of going from state s using action a to s'.
+			 */
 			@Override
 			public double probability(State sDelta, State s,
 					PCPAction a) {

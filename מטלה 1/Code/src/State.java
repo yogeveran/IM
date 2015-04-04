@@ -27,6 +27,28 @@ public class State {
 		this.patient_status_at_hospital = patient_status_at_hospital;
 		this.healed = healed;
 	}
+
+	public int getHour() {
+		return hour;
+	}
+
+	public Disease getPatient_status_at_doctor() {
+		return patient_status_at_doctor;
+	}
+
+	public int getPatient_time_left_at_hospital() {
+		return patient_time_left_at_hospital;
+	}
+
+	public Disease getPatient_status_at_hospital() {
+		return patient_status_at_hospital;
+	}
+
+	public int getHealed() {
+		return healed;
+	}
+
+	
 	
 
 }

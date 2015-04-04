@@ -1,4 +1,4 @@
 
 public enum ActionType {
-	Diagnose,SendHome,SendToHospital;
+	Diagnose,SendHome,SendToHospital,NoOp;
 }

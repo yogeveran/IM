@@ -11,23 +11,16 @@ import aima.core.agent.Action;
  *
  */
 public class PCPAction implements aima.core.agent.Action {
-
-	/**
-	 * 
-	 */
-	public PCPAction() {
-		// TODO Auto-generated constructor stub
+	ActionType type;
+	public PCPAction(ActionType type) {
+		super();
+		this.type = type;
 	}
+
+
 
 	@Override
 	public boolean isNoOp() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.type.equals(ActionType.NoOp);
 	}
-
-	public static Set<PCPAction> actions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
