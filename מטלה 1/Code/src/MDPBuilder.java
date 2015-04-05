@@ -1,14 +1,7 @@
-
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-//import aima.core.environment.cellworld.State;
-//import aima.core.environment.cellworld.CellWorld;
-//import aima.core.environment.cellworld.DoctorAction;
 import aima.core.probability.mdp.ActionsFunction;
 import aima.core.probability.mdp.MarkovDecisionProcess;
 import aima.core.probability.mdp.RewardFunction;
@@ -76,7 +69,6 @@ public class MDPBuilder {
 				if(isHospitalFree(s))
 					result.add(new PCPAction(ActionType.SendToHospital));
 				result.add(new PCPAction(ActionType.SendHome));
-				
 				return result;
 			}
 
@@ -89,7 +81,7 @@ public class MDPBuilder {
 			}
 
 			private boolean isTerminal(State s) {
-				return s.getHour() == 14;
+				return s.getHour() == 14 && s.getPatient_status_at_doctor().equals(Disease.Unknown);
 			}
 		};
 		return af;
@@ -108,7 +100,7 @@ public class MDPBuilder {
 	public static TransitionProbabilityFunction<State, PCPAction> createTransitionProbabilityFunction(
 			final PCPWorld cw) {
 		TransitionProbabilityFunction<State, PCPAction> tf = new TransitionProbabilityFunction<State, PCPAction>() {
-			private double[] distribution = new double[] { 0.8, 0.1, 0.1 };
+			//private double[] distribution = new double[] { 0.8, 0.1, 0.1 };
 
 			
 			/**
@@ -126,9 +118,72 @@ public class MDPBuilder {
 			@Override
 			public double probability(State sDelta, State s,
 					PCPAction a) {
-				double prob = 0;
-
-				List<State> outcomes = possibleOutcomes(s, a);
+				//double prob = 0;
+				String actionName = a.getActionName();
+				switch (actionName)
+				{
+				case "Diagnose":
+					if (s.getPatient_status_at_doctor()==Disease.Unknown &&
+						s.getHour()+1==sDelta.getHour() && sDelta.getPatient_time_left_at_hospital()==
+						Math.max(s.getPatient_time_left_at_hospital()-1, 0))
+					{
+						switch (sDelta.getPatient_status_at_doctor())
+						{
+						case Flu:
+							return 0.8;
+						case Unknown:
+							return 0;
+						default:
+							return 0.1;
+						}
+					}
+					break;
+				case "SendHome":
+					if (sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
+							sDelta.getHour()==s.getHour() &&
+							s.getPatient_time_left_at_hospital()==sDelta.getPatient_time_left_at_hospital())
+					{
+						switch(s.getPatient_status_at_doctor())
+						{
+						case Cough:
+							return 0.5;
+						case Flu:
+							if (sDelta.getDid_survive())
+								return 1.0;
+							return 0;
+						default:
+							if (!sDelta.getDid_survive())
+								return 1.0;
+							return 0;
+						}
+					}
+					break;
+				case "SendToHospital":
+					if (sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
+							sDelta.getHour()==s.getHour() &&
+							s.getPatient_time_left_at_hospital()==0)
+					{
+						switch(s.getPatient_status_at_doctor())
+						{
+						case Ebola:
+							if (sDelta.getDid_survive())
+								return 0.125;
+							return 0.375;
+						case Unknown:
+							return 0;
+						default:
+							if (sDelta.getDid_survive())
+								return 0.5;	
+							return 0;
+						}
+					}
+					break;
+				default:
+					break;
+				}
+				return 0;
+					
+				/*List<State> outcomes = possibleOutcomes(s, a);
 				for (int i = 0; i < outcomes.size(); i++) {
 					if (sDelta.equals(outcomes.get(i))) {
 						// Note: You have to sum the matches to
@@ -142,10 +197,11 @@ public class MDPBuilder {
 					}
 				}
 
-				return prob;
+				return prob;*/
+			
 			}
 			
-			private List<State> possibleOutcomes(State c,
+			/*private List<State> possibleOutcomes(State c,
 					PCPAction a) {
 				// There can be three possible outcomes for the planned action
 				List<State> outcomes = new ArrayList<State>();
@@ -155,7 +211,7 @@ public class MDPBuilder {
 				outcomes.add(cw.result(c, a.getSecondRightAngledAction()));
 
 				return outcomes;
-			}
+			}*/
 		};
 
 		return tf;
@@ -170,7 +226,10 @@ public class MDPBuilder {
 		RewardFunction<State> rf = new RewardFunction<State>() {
 			@Override
 			public double reward(State s) {
-				return s.getContent();
+				if (s.did_survive)
+					return 1;
+				else
+					return 0;
 			}
 		};
 		return rf;

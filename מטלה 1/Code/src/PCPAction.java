@@ -2,8 +2,6 @@
  * 
  */
 
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import aima.core.agent.Action;
 /**
@@ -17,7 +15,10 @@ public class PCPAction implements Action {
 		this.type = type;
 	}
 
-
+	public String getActionName ()
+	{
+		return type.toString();
+	}
 
 	@Override
 	public boolean isNoOp() {
