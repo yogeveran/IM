@@ -1,4 +1,4 @@
 
 public enum Disease {
-	None,Unknown,Cough,Flu,Ebola;
+	Unknown,Cough,Flu,Ebola;
 }

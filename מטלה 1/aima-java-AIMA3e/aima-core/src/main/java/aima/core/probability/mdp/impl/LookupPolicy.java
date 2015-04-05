@@ -20,14 +20,22 @@ import aima.core.probability.mdp.Policy;
 public class LookupPolicy<S, A extends Action> implements Policy<S, A> {
 	private Map<S, A> policy = new HashMap<S, A>();
 
+	public LookupPolicy (){}
+	
 	public LookupPolicy(Map<S, A> aPolicy) {
 		policy.putAll(aPolicy);
 	}
 
+	public void addToPolicy(S curr_state, A opt_action)
+	{
+		policy.put(curr_state, opt_action);
+	}
+	
 	//
 	// START-Policy
 	@Override
-	public A action(S s) {
+	public A action(S s) 
+	{
 		return policy.get(s);
 	}
 

@@ -10,7 +10,7 @@ import aima.core.agent.Action;
  * @author eranyogev
  *
  */
-public class PCPAction implements aima.core.agent.Action {
+public class PCPAction implements Action {
 	ActionType type;
 	public PCPAction(ActionType type) {
 		super();

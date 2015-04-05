@@ -1,12 +1,8 @@
 /**
- * 
- */
-
-/**
  * @author eranyogev
  *
  */
-public class State {
+public class State  {
 
 	/**
 	 * 
@@ -14,18 +10,14 @@ public class State {
 	int hour;
 	Disease patient_status_at_doctor; 
 	int patient_time_left_at_hospital;
-	Disease patient_status_at_hospital; 
-	int healed;
+	boolean did_survive;
 	
-	public State(int hour, Disease patient_status_at_doctor,
-			int patient_time_left_at_hospital,
-			Disease patient_status_at_hospital, int healed) {
-		super();
+	public State(boolean did_survive, int patient_time_left_at_hospital,
+			Disease patient_status_at_doctor, int hour) {
 		this.hour = hour;
 		this.patient_status_at_doctor = patient_status_at_doctor;
 		this.patient_time_left_at_hospital = patient_time_left_at_hospital;
-		this.patient_status_at_hospital = patient_status_at_hospital;
-		this.healed = healed;
+		this.did_survive = did_survive;
 	}
 
 	public int getHour() {
@@ -40,12 +32,8 @@ public class State {
 		return patient_time_left_at_hospital;
 	}
 
-	public Disease getPatient_status_at_hospital() {
-		return patient_status_at_hospital;
-	}
-
-	public int getHealed() {
-		return healed;
+	public boolean getDid_survive() {
+		return did_survive;
 	}
 
 	

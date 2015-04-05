@@ -5,6 +5,7 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.probability.mdp.MarkovDecisionProcess;
+import aima.core.probability.mdp.impl.LookupPolicy;
 import aima.core.util.Util;
 
 /**
@@ -47,6 +48,7 @@ import aima.core.util.Util;
 public class ValueIteration<S, A extends Action> {
 	// discount &gamma; to be used.
 	private double gamma = 0;
+	private LookupPolicy<S, A> opt_pi;
 
 	/**
 	 * Constructor.
@@ -59,6 +61,7 @@ public class ValueIteration<S, A extends Action> {
 			throw new IllegalArgumentException("Gamma must be > 0 and <= 1.0");
 		}
 		this.gamma = gamma;
+		opt_pi = new LookupPolicy<S, A>();
 	}
 
 	// function VALUE-ITERATION(mdp, &epsilon;) returns a utility function
@@ -97,6 +100,7 @@ public class ValueIteration<S, A extends Action> {
 				Set<A> actions = mdp.actions(s);
 				// Handle terminal states (i.e. no actions).
 				double aMax = 0;
+				A optAction= null;
 				if (actions.size() > 0) {
 					aMax = Double.NEGATIVE_INFINITY;
 				}
@@ -109,8 +113,10 @@ public class ValueIteration<S, A extends Action> {
 					}
 					if (aSum > aMax) {
 						aMax = aSum;
+						optAction= a;
 					}
 				}
+				opt_pi.addToPolicy(s, optAction);
 				// U'[s] <- R(s) + &gamma;
 				// max<sub>a &isin; A(s)</sub>
 				Udelta.put(s, mdp.reward(s) + gamma * aMax);
@@ -125,5 +131,10 @@ public class ValueIteration<S, A extends Action> {
 
 		// return U
 		return U;
+	}
+	
+	public A getOptimalActionForState(S curr_state)
+	{
+		return (A) opt_pi.action(curr_state);
 	}
 }

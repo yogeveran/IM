@@ -1,0 +1,32 @@
+מצב התחלתי:
+<false, 0, unknown,9>
+נאבחן:
+<false, 0, flu, 10>
+<false, 0, cough,10>
+<false, 0, ebola,10>
+נשלח הביתה:
+<true, 0, unknown, 10> - שפעת
+<true, 0, unknown, 10> - שיעול
+<false, 0, unknown, 10> - שיעול
+<false, 0, unknown, 10> - אבולה
+נשלח לבית חולים:
+<true, 1, unknown, 10> - שפעת
+<true, 1, unknown, 10> - שיעול
+<false, 1, unknown, 10> - אבולה
+<true, 1, unknown, 10> - אבולה
+<true, 2, unknown, 10> - שפעת
+<true, 2, unknown, 10> - שיעול
+<false, 2, unknown, 10> - אבולה
+<true, 2, unknown, 10> - אבולה
+
+<false, 0, unknown,9>
+נאבחן:
+<false, 0, flu, 10>
+<false, 0, cough,10>
+<false, 0, ebola,10>
+נשלח הביתה:
+<true, 0, unknown, 10> - שפעת
+<true, 0, unknown, 10> - שיעול
+<false, 0, unknown, 10> - שיעול
+<false, 0, unknown, 10> - אבולה
+
