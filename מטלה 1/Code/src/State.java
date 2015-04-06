@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * @author eranyogev
  *
  */
-public class State  {
+public class State implements Serializable  {
 
 	/**
 	 * 
@@ -36,6 +38,26 @@ public class State  {
 		return did_survive;
 	}
 
+	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null) return false;
+	    if (other == this) return true;
+	    if (!(other instanceof State))return false;
+	    State otherMyClass = (State)other;
+	    return (this.hour == otherMyClass.hour) 
+	    		&& (this.did_survive == otherMyClass.did_survive)
+	    		&& (this.patient_status_at_doctor == otherMyClass.patient_status_at_doctor)
+	    		&& (this.patient_time_left_at_hospital == otherMyClass.patient_time_left_at_hospital);
+	}
+
+	@Override
+	public String toString() {
+		return "State [hour=" + hour + ", patient_status_at_doctor="
+				+ patient_status_at_doctor + ", patient_time_left_at_hospital="
+				+ patient_time_left_at_hospital + ", did_survive="
+				+ did_survive + "]";
+	}
 	
 	
 
