@@ -119,13 +119,10 @@ public class MDPBuilder {
 			public double probability(State sDelta, State s,
 					PCPAction a) {
 				//double prob = 0;
-				String actionName = a.getActionName();
-				switch (actionName)
+				switch (a.getType())
 				{
-				case "Diagnose":
-					if (s.getPatient_status_at_doctor()==Disease.Unknown &&
-						s.getHour()+1==sDelta.getHour() && sDelta.getPatient_time_left_at_hospital()==
-						Math.max(s.getPatient_time_left_at_hospital()-1, 0))
+				case Diagnose:
+					if (isPossibleFollowingDiagnoseState(s, sDelta))
 					{
 						switch (sDelta.getPatient_status_at_doctor())
 						{
@@ -133,15 +130,17 @@ public class MDPBuilder {
 							return 0.8;
 						case Unknown:
 							return 0;
+						case Cough:
+							return 0.1;
+						case Ebola:
+							return 0.1;
 						default:
 							return 0.1;
 						}
 					}
 					break;
-				case "SendHome":
-					if (sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
-							sDelta.getHour()==s.getHour() &&
-							s.getPatient_time_left_at_hospital()==sDelta.getPatient_time_left_at_hospital())
+				case SendHome:
+					if (isPossibleFollowingSendHomeState(s, sDelta))
 					{
 						switch(s.getPatient_status_at_doctor())
 						{
@@ -158,10 +157,8 @@ public class MDPBuilder {
 						}
 					}
 					break;
-				case "SendToHospital":
-					if (sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
-							sDelta.getHour()==s.getHour() &&
-							s.getPatient_time_left_at_hospital()==0)
+				case SendToHospital:
+					if (isPossibleFollowingSendToHospitalState(s, sDelta))
 					{
 						switch(s.getPatient_status_at_doctor())
 						{
@@ -199,6 +196,39 @@ public class MDPBuilder {
 
 				return prob;*/
 			
+			}
+
+			private boolean isPossibleFollowingSendToHospitalState(State s,
+					State sDelta) {
+				return sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
+						sDelta.getHour()==s.getHour() &&
+						s.getPatient_time_left_at_hospital()==0;
+			}
+
+			private boolean isPossibleFollowingSendHomeState(State s,
+					State sDelta) {
+				return sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
+						sDelta.getHour()==s.getHour() &&
+						s.getPatient_time_left_at_hospital()==sDelta.getPatient_time_left_at_hospital();
+			}
+
+			private boolean isPossibleFollowingDiagnoseState(State s, State sDelta) {
+				return isDiagnosisNeeded(s) &&
+					is_First_OneHour_Before_Second(s, sDelta) && 
+					didTimePassForHospitalPatient(s, sDelta);
+			}
+
+			private boolean didTimePassForHospitalPatient(State s, State sDelta) {
+				return sDelta.getPatient_time_left_at_hospital()==
+				Math.max(s.getPatient_time_left_at_hospital()-1, 0);
+			}
+
+			private boolean is_First_OneHour_Before_Second(State s, State sDelta) {
+				return s.getHour()+1==sDelta.getHour();
+			}
+
+			private boolean isDiagnosisNeeded(State s) {
+				return s.getPatient_status_at_doctor().equals(Disease.Unknown);
 			}
 			
 			/*private List<State> possibleOutcomes(State c,

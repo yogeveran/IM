@@ -24,4 +24,9 @@ public class PCPAction implements Action {
 	public boolean isNoOp() {
 		return this.type.equals(ActionType.NoOp);
 	}
+
+	public ActionType getType() {
+		// TODO Auto-generated method stub
+		return this.type;
+	}
 }
