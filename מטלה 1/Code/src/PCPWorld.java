@@ -38,13 +38,6 @@ public class PCPWorld {
 //		waitForKey();
 	}
 
-	private static void waitForKey() {
-		try {
-			System.in.read();
-		} catch (IOException e) {
-		}
-	}
-	
 	public static void generateStates(){
 		for(int time_left = 0;time_left<3;time_left++){
 			for(Disease d :Disease.values()){
@@ -56,41 +49,14 @@ public class PCPWorld {
 		}
 	}
 	
-	public PCPWorld() throws IOException
+	public PCPWorld() 
 	{
-		List<String> lines=Files.readAllLines(Paths.get("states.txt"), Charset.forName("UTF-8"));
-		String[] data;
-		boolean didSurvive;
-		int timeInHospital, hour;
-		Disease disease;
-		for(String line:lines){
-			data = line.split(",");
-			if (data[0]=="false")
-				didSurvive= false;
-			else
-				didSurvive= true;
-			timeInHospital = Integer.parseInt(data[1]);
-			disease = getDisease(data[2]);
-			hour = Integer.parseInt(data[3]);
-			State newState = new State (didSurvive, timeInHospital, disease, hour);
-			states.add(newState);
-		}
+		if(!loadStates("states.txt"))
+			generateStates();
+		states.remove(InitialState);
+		states.add(InitialState);
 	}
 	
-	private Disease getDisease (String disease)
-	{
-		switch(disease)
-		{
-		case "flu":
-			return Disease.Flu;
-		case "cough":
-			return Disease.Cough;
-		case "ebole":
-			return Disease.Ebola;
-		default:
-			return Disease.Flu;
-		}
-	}
 	
 	public State getInitialState() 
 	{

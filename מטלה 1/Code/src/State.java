@@ -59,6 +59,9 @@ public class State implements Serializable  {
 				+ did_survive + "]";
 	}
 	
-	
+	@Override
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
 
 }

@@ -31,9 +31,9 @@ public class MDPBuilder {
 			final PCPWorld dw) {
 
 		return new MDP<State, PCPAction>(
-				dw.getStates(), //Too Many States to List.
-				dw.getInitialState(), //Done
-				createActionsFunction(dw),
+				dw.getStates(), //Done
+				dw.getInitialState(),//Done
+				createActionsFunction(dw),//Done
 				createTransitionProbabilityFunction(dw),
 				createRewardFunction());
 	}
@@ -73,7 +73,7 @@ public class MDPBuilder {
 			}
 
 			private boolean isHospitalFree(State s) {
-				return s.patient_time_left_at_hospital>0;
+				return s.patient_time_left_at_hospital==0;
 			}
 
 			private boolean needToDiagnose(State s) {
