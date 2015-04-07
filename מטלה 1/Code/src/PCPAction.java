@@ -15,11 +15,6 @@ public class PCPAction implements Action {
 		this.type = type;
 	}
 
-	public String getActionName ()
-	{
-		return type.toString();
-	}
-
 	@Override
 	public boolean isNoOp() {
 		return this.type.equals(ActionType.NoOp);
@@ -28,5 +23,10 @@ public class PCPAction implements Action {
 	public ActionType getType() {
 		// TODO Auto-generated method stub
 		return this.type;
+	}
+
+	@Override
+	public String toString() {
+		return "Action [type=" + type + "]";
 	}
 }

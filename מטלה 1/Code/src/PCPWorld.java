@@ -16,26 +16,11 @@ public class PCPWorld {
 	private static final State InitialState = new State(false, 0, Disease.Unknown, 9);
 	private static Set<State>  states = new HashSet<State>();
 	
-	public static void main(String [ ] args){
-		generateStates();
+	public static void createStates(){
 		String fileName = "states.txt";
-		if(saveStates(fileName))
-			System.out.println("Success Saving");
-		else
-			System.out.println("Failure Saving");
-		
-		
 		states = null;
-		if(loadStates(fileName))
-			System.out.println("Success Loading");
-		else
-			System.out.println("Failure Loading");
-		
-		for(State s: states){
-			System.out.println(s);
-		}
-		System.out.println("Count: "+states.size());
-		
+		if(!loadStates(fileName))
+			generateStates();
 	}
 
 	public static void generateStates(){
