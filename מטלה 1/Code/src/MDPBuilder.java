@@ -34,8 +34,8 @@ public class MDPBuilder {
 				dw.getStates(), //Done
 				dw.getInitialState(),//Done
 				createActionsFunction(dw),//Done
-				createTransitionProbabilityFunction(dw),
-				createRewardFunction());
+				createTransitionProbabilityFunction(dw), //Done
+				createRewardFunction()); //Done
 	}
 
 	/**
@@ -118,7 +118,6 @@ public class MDPBuilder {
 			@Override
 			public double probability(State sDelta, State s,
 					PCPAction a) {
-				//double prob = 0;
 				switch (a.getType())
 				{
 				case Diagnose:
@@ -179,22 +178,6 @@ public class MDPBuilder {
 					break;
 				}
 				return 0;
-					
-				/*List<State> outcomes = possibleOutcomes(s, a);
-				for (int i = 0; i < outcomes.size(); i++) {
-					if (sDelta.equals(outcomes.get(i))) {
-						// Note: You have to sum the matches to
-						// sDelta as the different actions
-						// could have the same effect (i.e.
-						// staying in place due to there being
-						// no adjacent cells), which increases
-						// the probability of the transition for
-						// that state.
-						prob += distribution[i];
-					}
-				}
-
-				return prob;*/
 			
 			}
 
@@ -231,17 +214,6 @@ public class MDPBuilder {
 				return s.getPatient_status_at_doctor().equals(Disease.Unknown);
 			}
 			
-			/*private List<State> possibleOutcomes(State c,
-					PCPAction a) {
-				// There can be three possible outcomes for the planned action
-				List<State> outcomes = new ArrayList<State>();
-
-				outcomes.add(cw.result(c, a));
-				outcomes.add(cw.result(c, a.getFirstRightAngledAction()));
-				outcomes.add(cw.result(c, a.getSecondRightAngledAction()));
-
-				return outcomes;
-			}*/
 		};
 
 		return tf;
@@ -253,15 +225,11 @@ public class MDPBuilder {
 	 *         the reward value.
 	 */
 	public static RewardFunction<State> createRewardFunction() {
-		RewardFunction<State> rf = new RewardFunction<State>() {
+		return new RewardFunction<State>() {
 			@Override
 			public double reward(State s) {
-				if (s.did_survive)
-					return 1;
-				else
-					return 0;
+				return s.did_survive ? 1 :  0;
 			}
 		};
-		return rf;
 	}
 }

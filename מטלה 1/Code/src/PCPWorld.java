@@ -34,15 +34,16 @@ public class PCPWorld {
 		for(State s: states){
 			System.out.println(s);
 		}
+		System.out.println("Count: "+states.size());
 		
-//		waitForKey();
 	}
 
 	public static void generateStates(){
 		for(int time_left = 0;time_left<3;time_left++){
 			for(Disease d :Disease.values()){
 				for(int time = 9;time<15;time++){
-					states.add(new State(true, time_left, d, time));
+					if(d.equals(Disease.Unknown))
+						states.add(new State(true, time_left, d, time));
 					states.add(new State(false, time_left, d, time));
 				}
 			}
