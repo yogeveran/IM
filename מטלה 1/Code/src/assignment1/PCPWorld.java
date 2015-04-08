@@ -1,3 +1,4 @@
+package assignment1;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class PCPWorld {
 	}
 
 	public static void generateStates(){
+		states = new HashSet<State>();
 		for(int time_left = 0;time_left<3;time_left++){
 			for(Disease d :Disease.values()){
 				for(int time = 9;time<15;time++){

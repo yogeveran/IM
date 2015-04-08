@@ -1,5 +1,8 @@
+package assignment1;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import aima.core.probability.mdp.ActionsFunction;
@@ -100,8 +103,6 @@ public class MDPBuilder {
 	public static TransitionProbabilityFunction<State, PCPAction> createTransitionProbabilityFunction(
 			final PCPWorld cw) {
 		TransitionProbabilityFunction<State, PCPAction> tf = new TransitionProbabilityFunction<State, PCPAction>() {
-			//private double[] distribution = new double[] { 0.8, 0.1, 0.1 };
-
 			
 			/**
 			 * Return the probability of going from state s using action a to s' based
@@ -134,7 +135,7 @@ public class MDPBuilder {
 						case Ebola:
 							return 0.1;
 						default:
-							return 0.1;
+							return 0;
 						}
 					}
 					break;
@@ -149,9 +150,13 @@ public class MDPBuilder {
 							if (sDelta.getDid_survive())
 								return 1.0;
 							return 0;
-						default:
+						case Ebola:
 							if (!sDelta.getDid_survive())
 								return 1.0;
+							return 0;
+						case Unknown:
+							return 0;
+						default:
 							return 0;
 						}
 					}
@@ -165,11 +170,17 @@ public class MDPBuilder {
 							if (sDelta.getDid_survive())
 								return 0.125;
 							return 0.375;
+						case Flu:
+							if (sDelta.getDid_survive())
+								return 1.0;
+							return 0;
+							
+						case Cough:
+							if (sDelta.getDid_survive())
+								return 0.5;
 						case Unknown:
 							return 0;
-						default:
-							if (sDelta.getDid_survive())
-								return 0.5;	
+						default:	
 							return 0;
 						}
 					}
@@ -183,16 +194,32 @@ public class MDPBuilder {
 
 			private boolean isPossibleFollowingSendToHospitalState(State s,
 					State sDelta) {
-				return sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
+				List<Disease> lst = new LinkedList<Disease>();
+				lst.add(Disease.Cough);
+				lst.add(Disease.Ebola);
+				lst.add(Disease.Flu);
+				boolean disease = lst.contains(s.getPatient_status_at_doctor());
+				return disease&&sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
 						sDelta.getHour()==s.getHour() &&
-						s.getPatient_time_left_at_hospital()==0;
+						s.getPatient_time_left_at_hospital()==0&&
+						sDelta.getPatient_time_left_at_hospital()>0;
 			}
 
 			private boolean isPossibleFollowingSendHomeState(State s,
 					State sDelta) {
-				return sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
-						sDelta.getHour()==s.getHour() &&
-						s.getPatient_time_left_at_hospital()==sDelta.getPatient_time_left_at_hospital();
+				
+				Set<State> homeOutcomes = new HashSet<State>();
+				boolean diagnosed = s.getPatient_status_at_doctor().equals(Disease.Unknown);
+				if(diagnosed)
+					return false;
+				
+				boolean newPatient = sDelta.getPatient_status_at_doctor().equals(Disease.Unknown);
+				boolean sameHour = sDelta.getHour()==s.getHour();
+				boolean noTimeChange = s.getPatient_time_left_at_hospital()==sDelta.getPatient_time_left_at_hospital();
+				return newPatient &&
+						sameHour &&
+						noTimeChange&&
+						diagnosed;
 			}
 
 			private boolean isPossibleFollowingDiagnoseState(State s, State sDelta) {

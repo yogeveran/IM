@@ -1,3 +1,4 @@
+package assignment1;
 import java.io.Serializable;
 
 /**
@@ -64,4 +65,31 @@ public class State implements Serializable  {
         return this.toString().hashCode();
     }
 
+    public int compareTo(State otherState) {
+        
+        if(otherState == null)
+        	return -1;
+        
+        if(this.hour<otherState.hour)
+        	return -1;
+        if(this.hour>otherState.hour)
+        	return 1;
+        
+        if(!this.patient_status_at_doctor.equals(otherState.patient_status_at_doctor))
+        	return orderDisease(this.patient_status_at_doctor,otherState.patient_status_at_doctor);
+        
+        if(this.patient_time_left_at_hospital<otherState.patient_time_left_at_hospital)
+        	return -1;
+        if(otherState.patient_time_left_at_hospital<this.patient_time_left_at_hospital)
+        	return 1;
+        
+        return this.did_survive ? (otherState.did_survive ? 0: -1) : (otherState.did_survive ? 1: 0); 
+        
+        
+     }
+
+	private int orderDisease(Disease patient_status_at_doctor2,
+			Disease patient_status_at_doctor3) {
+		return patient_status_at_doctor2.ordinal()<patient_status_at_doctor3.ordinal() ? -1 : 1;
+	} 
 }
