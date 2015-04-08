@@ -36,6 +36,7 @@ public interface MarkovDecisionProcess<S, A extends Action> {
 	 * @return the set of states associated with the Markov decision process.
 	 */
 	Set<S> states();
+	Set<S> states(S s);
 
 	/**
 	 * Get the initial state s<sub>0</sub> for this instance of a Markov

@@ -59,7 +59,7 @@ public class Main {
 		});
 		for(State s:states)
 			System.out.println(s+" | " + vi.getOptimalActionForState(s) + " | "+mp.get(s));
-		
+		System.out.println(states.size());
 	}
 
 }
