@@ -192,40 +192,38 @@ public class MDPBuilder {
 			
 			}
 
-			private boolean isPossibleFollowingSendToHospitalState(State s,
-					State sDelta) {
-				List<Disease> lst = new LinkedList<Disease>();
-				lst.add(Disease.Cough);
-				lst.add(Disease.Ebola);
-				lst.add(Disease.Flu);
-				boolean disease = lst.contains(s.getPatient_status_at_doctor());
-				return disease&&sDelta.getPatient_status_at_doctor()==Disease.Unknown &&
-						sDelta.getHour()==s.getHour() &&
-						s.getPatient_time_left_at_hospital()==0&&
-						sDelta.getPatient_time_left_at_hospital()>0;
-			}
-
-			private boolean isPossibleFollowingSendHomeState(State s,
-					State sDelta) {
+			private boolean isPossibleFollowingSendToHospitalState(State s, State sDelta) {
 				
 				Set<State> homeOutcomes = new HashSet<State>();
-				boolean diagnosed = s.getPatient_status_at_doctor().equals(Disease.Unknown);
-				if(diagnosed)
-					return false;
 				
-				boolean newPatient = sDelta.getPatient_status_at_doctor().equals(Disease.Unknown);
-				boolean sameHour = sDelta.getHour()==s.getHour();
-				boolean noTimeChange = s.getPatient_time_left_at_hospital()==sDelta.getPatient_time_left_at_hospital();
-				return newPatient &&
-						sameHour &&
-						noTimeChange&&
-						diagnosed;
+				homeOutcomes.add(new State(false, 2, Disease.Unknown, s.hour));
+				homeOutcomes.add(new State(true, 2, Disease.Unknown, s.hour));
+				homeOutcomes.add(new State(false, 1, Disease.Unknown, s.hour));
+				homeOutcomes.add(new State(true, 1, Disease.Unknown, s.hour));
+				
+				return homeOutcomes.contains(sDelta);
+			}
+
+			private boolean isPossibleFollowingSendHomeState(State s, State sDelta) {
+				
+				Set<State> homeOutcomes = new HashSet<State>();
+				
+				homeOutcomes.add(new State(false, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
+				homeOutcomes.add(new State(true, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
+				
+				return homeOutcomes.contains(sDelta);
 			}
 
 			private boolean isPossibleFollowingDiagnoseState(State s, State sDelta) {
-				return isDiagnosisNeeded(s) &&
-					is_First_OneHour_Before_Second(s, sDelta) && 
-					didTimePassForHospitalPatient(s, sDelta);
+				if(sDelta.did_survive&&sDelta.patient_status_at_doctor.equals(Disease.Unknown)) return false;
+				if(s.did_survive&&(s.getHour()==9)) return false;
+				Set<State> homeOutcomes = new HashSet<State>();
+				
+				homeOutcomes.add(new State(false, Math.max(0,s.patient_time_left_at_hospital-1), Disease.Flu, s.hour+1));
+				homeOutcomes.add(new State(false, Math.max(0,s.patient_time_left_at_hospital-1), Disease.Cough, s.hour+1));
+				homeOutcomes.add(new State(false, Math.max(0,s.patient_time_left_at_hospital-1), Disease.Ebola, s.hour+1));
+				
+				return homeOutcomes.contains(sDelta);
 			}
 
 			private boolean didTimePassForHospitalPatient(State s, State sDelta) {

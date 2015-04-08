@@ -26,17 +26,64 @@ public class PCPWorld {
 
 	public static void generateStates(){
 		states = new HashSet<State>();
-		for(int time_left = 0;time_left<3;time_left++){
-			for(Disease d :Disease.values()){
-				for(int time = 9;time<15;time++){
-					if(d.equals(Disease.Unknown))
-						states.add(new State(true, time_left, d, time));
-					states.add(new State(false, time_left, d, time));
-				}
-			}
-		}
+		states.add(InitialState);
+		generateSons(InitialState);
 	}
 	
+	private static void generateSons(State s) {
+		if(isTerminal(s))
+			return;
+		if(isDiagnose(s)){
+			Set<State> statesList = new HashSet<State>();
+			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Flu, s.hour+1));
+			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Ebola, s.hour+1));
+			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Cough, s.hour+1));
+			states.addAll(statesList);
+			for(State son:statesList)
+				generateSons(son);
+		}else{
+			if(isSendToHospital(s)){
+				Set<State> statesList = new HashSet<State>();
+
+				statesList.add(new State(false, 2, Disease.Unknown, s.hour));
+				statesList.add(new State(false, 1, Disease.Unknown, s.hour));
+
+				statesList.add(new State(true, 2, Disease.Unknown, s.hour));
+				statesList.add(new State(true, 1, Disease.Unknown, s.hour));
+				
+				states.addAll(statesList);
+				for(State son:statesList)
+					generateSons(son);	
+			}
+			
+			//Send To Home
+			Set<State> statesList = new HashSet<State>();
+
+			statesList.add(new State(false, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
+			statesList.add(new State(true, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
+			states.addAll(statesList);
+			for(State son:statesList)
+				generateSons(son);	
+			return;
+			
+		}
+		
+		
+	}
+
+	private static boolean isSendToHospital(State s) {
+		return s.patient_time_left_at_hospital==0;
+	}
+
+	private static boolean isDiagnose(State s) {
+		return s.getPatient_status_at_doctor().equals(Disease.Unknown);
+	}
+
+
+	private static boolean isTerminal(State s) {
+		return s.getHour()==14&&s.getPatient_status_at_doctor().equals(Disease.Unknown);
+	}
+
 	public PCPWorld() 
 	{
 		if(!loadStates("states.txt"))
