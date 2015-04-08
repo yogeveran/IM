@@ -170,18 +170,10 @@ public class MDPBuilder {
 							if (sDelta.getDid_survive())
 								return 0.125;
 							return 0.375;
-						case Flu:
-							if (sDelta.getDid_survive())
-								return 1.0;
-							return 0;
-							
-						case Cough:
-							if (sDelta.getDid_survive())
-								return 0.5;
 						case Unknown:
 							return 0;
 						default:	
-							return 0;
+							return 0.5;
 						}
 					}
 					break;
