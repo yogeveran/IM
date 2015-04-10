@@ -18,16 +18,34 @@ public class Main {
 	public static void main(String[] args) {
 		int gamma = 1;
 		double epsilon=0;
+		List<Double> results = new LinkedList<Double>();
+		for(int closingTime = 14; closingTime<=15;closingTime++){
+			double avgHealed = runValueIteration(gamma, epsilon, closingTime);
+			System.out.print(avgHealed+"|");
+			results.add( avgHealed);	
+		}
 		
-		PCPWorld.createStates();
-		PCPWorld dw = new PCPWorld();
+	}
+
+
+	private static double runValueIteration(int gamma, double epsilon,
+			int closingTime) {
+		PCPWorld dw = new PCPWorld(closingTime);
 		ValueIteration<State, PCPAction> vi = new ValueIteration<State, PCPAction>(gamma);
-		MarkovDecisionProcess<State, PCPAction> mdp = MDPBuilder.createMDP(dw);
+		MarkovDecisionProcess<State, PCPAction> mdp = MDPBuilder.createMDP(dw,closingTime);
 		
 		Map<State, Double> mp = vi.valueIteration(mdp, epsilon);
 		
-		LinkedList<State> states = new LinkedList<State>();
-		states.addAll(dw.getStates());
+		return mp.get(dw.getInitialState());
+	}
+
+	
+//	LinkedList<State> states = new LinkedList<State>();
+//	states.addAll(dw.getStates());
+//	sortStates(states);
+//	printStates(vi, mp, states);
+	
+	private static void sortStates(LinkedList<State> states) {
 		states.sort(new Comparator<State>() {
 			@Override
 			public int compare(State o1, State o2) {
@@ -57,19 +75,12 @@ public class Main {
 				return patient_status_at_doctor2.ordinal()<patient_status_at_doctor3.ordinal() ? -1 : 1;
 			} 
 		});
-		for(State s:states)
-			System.out.println(s+" | " + vi.getOptimalActionForState(s) + " | "+mp.get(s));
-		System.out.println(states.size());
-		
-		sanityCheck(states,vi);
 	}
 
-	private static void sanityCheck(LinkedList<State> states,
-			ValueIteration<State, PCPAction> vi) {
-		for(State s:states){
-			if(s.patient_status_at_doctor.equals(Disease.Flu)&&(!vi.getOptimalActionForState(s).type.equals(ActionType.SendHome)))
-				System.out.println("Error with state: "+s+", Chosen Action is: "+vi.getOptimalActionForState(s));
-		}
+	private static void printStates(ValueIteration<State, PCPAction> vi,Map<State, Double> mp, LinkedList<State> states) {
+		for(State s:states)
+			System.out.println(s+" | " + vi.getOptimalActionForState(s) + " | "+mp.get(s));
 	}
+
 
 }

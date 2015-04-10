@@ -110,13 +110,9 @@ public class ValueIteration<S, A extends Action> {
 					// &Sigma;<sub>s'</sub>P(s' | s, a) U[s']
 					double aSum = 0;
 					for (S sDelta : mdp.states()) {
-						if(debugStates(s,sDelta))
-							System.out.print("");
 						aSum += mdp.transitionProbability(sDelta, s, a)
 								* U.get(sDelta);
 					}
-					if(((State)s).getPatient_status_at_doctor().equals(Disease.Flu)&&aSum>0)
-						System.out.println("");
 					if (aSum > aMax) {
 						aMax = aSum;
 						optAction= a;

@@ -27,18 +27,19 @@ public class MDPBuilder {
 	 * 
 	 * @param dw
 	 *            the State world
+	 * @param closingTime 
 	 * @return an MDP that can be used to generate the utility values detailed
 	 *         
 	 */
 	public static MarkovDecisionProcess<State, PCPAction> createMDP(
-			final PCPWorld dw) {
+			final PCPWorld dw, int closingTime) {
 
 		return new MDP<State, PCPAction>(
 				dw.getStates(), //Done
 				dw.getInitialState(),//Done
-				createActionsFunction(dw),//Done
-				createTransitionProbabilityFunction(dw), //Done
-				createRewardFunction()); //Done
+				createActionsFunction(dw,closingTime),//Done
+				createTransitionProbabilityFunction(dw,closingTime), //Done
+				createRewardFunction(closingTime)); //Done
 	}
 
 	/**
@@ -47,11 +48,12 @@ public class MDPBuilder {
 	 * 
 	 * @param dw
 	 *            the State world from figure 17.1.
+	 * @param closingTime 
 	 * @return the set of actions allowed at a particular State. This set will be
 	 *         empty if at a terminal state.
 	 */
 	public static ActionsFunction<State, PCPAction> createActionsFunction(
-			final PCPWorld dw) {
+			final PCPWorld dw, int closingTime) {
 		
 
 		ActionsFunction<State, PCPAction> af = new ActionsFunction<State, PCPAction>() {
@@ -84,7 +86,7 @@ public class MDPBuilder {
 			}
 
 			private boolean isTerminal(State s) {
-				return s.getHour() == 14 && s.getPatient_status_at_doctor().equals(Disease.Unknown);
+				return s.getHour() == closingTime && s.getPatient_status_at_doctor().equals(Disease.Unknown);
 			}
 		};
 		return af;
@@ -98,10 +100,11 @@ public class MDPBuilder {
 	 * 
 	 * @param cw
 	 *            the State world from figure 17.1.
+	 * @param closingTime 
 	 * @return the transition probability function as described in figure 17.1.
 	 */
 	public static TransitionProbabilityFunction<State, PCPAction> createTransitionProbabilityFunction(
-			final PCPWorld cw) {
+			final PCPWorld cw, int closingTime) {
 		TransitionProbabilityFunction<State, PCPAction> tf = new TransitionProbabilityFunction<State, PCPAction>() {
 			
 			/**
@@ -236,10 +239,11 @@ public class MDPBuilder {
 
 	/**
 	 * 
+	 * @param closingTime 
 	 * @return the reward function which takes the content of the State as being
 	 *         the reward value.
 	 */
-	public static RewardFunction<State> createRewardFunction() {
+	public static RewardFunction<State> createRewardFunction(int closingTime) {
 		return new RewardFunction<State>() {
 			@Override
 			public double reward(State s) {
@@ -249,50 +253,5 @@ public class MDPBuilder {
 	}
 
 
-	private static boolean isSendToHospital(State s) {
-		return s.patient_time_left_at_hospital==0;
-	}
-
-	private static boolean isDiagnose(State s) {
-		return s.getPatient_status_at_doctor().equals(Disease.Unknown);
-	}
-
-
-	private static boolean isTerminal(State s) {
-		return s.getHour()==14&&s.getPatient_status_at_doctor().equals(Disease.Unknown);
-	}
-
-	private static void generateSons(State s,Set<State> states) {
-		if(isTerminal(s))
-			return;
-		if(isDiagnose(s)){
-			Set<State> statesList = new HashSet<State>();
-			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Flu, s.hour+1));
-			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Ebola, s.hour+1));
-			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Cough, s.hour+1));
-			states.addAll(statesList);
-		}else{
-			if(isSendToHospital(s)){
-				Set<State> statesList = new HashSet<State>();
-
-				statesList.add(new State(false, 2, Disease.Unknown, s.hour));
-				statesList.add(new State(false, 1, Disease.Unknown, s.hour));
-
-				statesList.add(new State(true, 2, Disease.Unknown, s.hour));
-				statesList.add(new State(true, 1, Disease.Unknown, s.hour));
-				
-				states.addAll(statesList);	
-			}
-			
-			//Send To Home
-			Set<State> statesList = new HashSet<State>();
-
-			statesList.add(new State(false, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
-			statesList.add(new State(true, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
-			states.addAll(statesList);
-
-			return;
-			
-		}}
-		
+	
 }

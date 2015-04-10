@@ -16,21 +16,21 @@ public class PCPWorld {
 
 	private static final State InitialState = new State(false, 0, Disease.Unknown, 9);
 	private static Set<State>  states = new HashSet<State>();
-	
-	public static void createStates(){
+	private int closingTime = 14;
+	public  void createStates(){
 		String fileName = "states.txt";
 		states = null;
 		if(!loadStates(fileName))
 			generateStates();
 	}
 
-	public static void generateStates(){
+	public void generateStates(){
 		states = new HashSet<State>();
 		states.add(InitialState);
 		generateSons(InitialState);
 	}
 	
-	private static void generateSons(State s) {
+	private void generateSons(State s) {
 		if(isTerminal(s))
 			return;
 		if(isDiagnose(s)){
@@ -80,14 +80,14 @@ public class PCPWorld {
 	}
 
 
-	private static boolean isTerminal(State s) {
-		return s.getHour()==14&&s.getPatient_status_at_doctor().equals(Disease.Unknown);
+	private  boolean isTerminal(State s) {
+		return s.getHour()==closingTime&&s.getPatient_status_at_doctor().equals(Disease.Unknown);
 	}
 
-	public PCPWorld() 
+	public PCPWorld(int i) 
 	{
-		if(!loadStates("states.txt"))
-			generateStates();
+		this.closingTime = i;
+		createStates();
 		states.remove(InitialState);
 		states.add(InitialState);
 	}
