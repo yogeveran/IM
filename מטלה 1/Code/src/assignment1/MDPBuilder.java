@@ -171,33 +171,42 @@ public class MDPBuilder {
 								return 0.125;
 							return 0.375;
 						case Unknown:
-							return 0;
-						default:	
-							return 0.5;
+							return 0.0;
+						default:
+							if(sDelta.did_survive)
+								return 0.5;
+							break;
 						}
 					}
 					break;
 				default:
 					break;
 				}
-				return 0;
+				return 0.0;
 			
 			}
 
 			private boolean isPossibleFollowingSendToHospitalState(State s, State sDelta) {
+				if((s.patient_status_at_doctor.equals(Disease.Unknown))||(s.patient_time_left_at_hospital!=0)||s.did_survive)
+					return false;
 				
 				Set<State> homeOutcomes = new HashSet<State>();
 				
-				homeOutcomes.add(new State(false, 2, Disease.Unknown, s.hour));
-				homeOutcomes.add(new State(true, 2, Disease.Unknown, s.hour));
-				homeOutcomes.add(new State(false, 1, Disease.Unknown, s.hour));
-				homeOutcomes.add(new State(true, 1, Disease.Unknown, s.hour));
+				State opt1 = new State(false, 2, Disease.Unknown, s.hour);
+				State opt2 = new State(false, 1, Disease.Unknown, s.hour);
+				
+				State opt3 = new State(true, 2, Disease.Unknown, s.hour);
+				State opt4 = new State(true, 1, Disease.Unknown, s.hour);
+				homeOutcomes.add(opt1);
+				homeOutcomes.add(opt2);
+				homeOutcomes.add(opt3);
+				homeOutcomes.add(opt4);
 				
 				return homeOutcomes.contains(sDelta);
 			}
 
 			private boolean isPossibleFollowingSendHomeState(State s, State sDelta) {
-				
+				if(s.patient_status_at_doctor.equals(Disease.Unknown)||s.did_survive) return false;
 				Set<State> homeOutcomes = new HashSet<State>();
 				
 				homeOutcomes.add(new State(false, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
@@ -207,8 +216,8 @@ public class MDPBuilder {
 			}
 
 			private boolean isPossibleFollowingDiagnoseState(State s, State sDelta) {
-				if(sDelta.did_survive&&sDelta.patient_status_at_doctor.equals(Disease.Unknown)) return false;
-				if(s.did_survive&&(s.getHour()==9)) return false;
+				if(!s.patient_status_at_doctor.equals(Disease.Unknown)) return false;
+				
 				Set<State> homeOutcomes = new HashSet<State>();
 				
 				homeOutcomes.add(new State(false, Math.max(0,s.patient_time_left_at_hospital-1), Disease.Flu, s.hour+1));
@@ -218,18 +227,7 @@ public class MDPBuilder {
 				return homeOutcomes.contains(sDelta);
 			}
 
-			private boolean didTimePassForHospitalPatient(State s, State sDelta) {
-				return sDelta.getPatient_time_left_at_hospital()==
-				Math.max(s.getPatient_time_left_at_hospital()-1, 0);
-			}
 
-			private boolean is_First_OneHour_Before_Second(State s, State sDelta) {
-				return s.getHour()+1==sDelta.getHour();
-			}
-
-			private boolean isDiagnosisNeeded(State s) {
-				return s.getPatient_status_at_doctor().equals(Disease.Unknown);
-			}
 			
 		};
 
@@ -249,4 +247,52 @@ public class MDPBuilder {
 			}
 		};
 	}
+
+
+	private static boolean isSendToHospital(State s) {
+		return s.patient_time_left_at_hospital==0;
+	}
+
+	private static boolean isDiagnose(State s) {
+		return s.getPatient_status_at_doctor().equals(Disease.Unknown);
+	}
+
+
+	private static boolean isTerminal(State s) {
+		return s.getHour()==14&&s.getPatient_status_at_doctor().equals(Disease.Unknown);
+	}
+
+	private static void generateSons(State s,Set<State> states) {
+		if(isTerminal(s))
+			return;
+		if(isDiagnose(s)){
+			Set<State> statesList = new HashSet<State>();
+			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Flu, s.hour+1));
+			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Ebola, s.hour+1));
+			statesList.add(new State(false, Math.max(0, s.patient_time_left_at_hospital-1), Disease.Cough, s.hour+1));
+			states.addAll(statesList);
+		}else{
+			if(isSendToHospital(s)){
+				Set<State> statesList = new HashSet<State>();
+
+				statesList.add(new State(false, 2, Disease.Unknown, s.hour));
+				statesList.add(new State(false, 1, Disease.Unknown, s.hour));
+
+				statesList.add(new State(true, 2, Disease.Unknown, s.hour));
+				statesList.add(new State(true, 1, Disease.Unknown, s.hour));
+				
+				states.addAll(statesList);	
+			}
+			
+			//Send To Home
+			Set<State> statesList = new HashSet<State>();
+
+			statesList.add(new State(false, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
+			statesList.add(new State(true, s.patient_time_left_at_hospital, Disease.Unknown, s.hour));
+			states.addAll(statesList);
+
+			return;
+			
+		}}
+		
 }

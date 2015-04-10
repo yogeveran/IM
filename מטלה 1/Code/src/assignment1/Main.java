@@ -60,6 +60,16 @@ public class Main {
 		for(State s:states)
 			System.out.println(s+" | " + vi.getOptimalActionForState(s) + " | "+mp.get(s));
 		System.out.println(states.size());
+		
+		sanityCheck(states,vi);
+	}
+
+	private static void sanityCheck(LinkedList<State> states,
+			ValueIteration<State, PCPAction> vi) {
+		for(State s:states){
+			if(s.patient_status_at_doctor.equals(Disease.Flu)&&(!vi.getOptimalActionForState(s).type.equals(ActionType.SendHome)))
+				System.out.println("Error with state: "+s+", Chosen Action is: "+vi.getOptimalActionForState(s));
+		}
 	}
 
 }
