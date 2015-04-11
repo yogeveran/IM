@@ -19,7 +19,7 @@ public class Main {
 		int gamma = 1;
 		double epsilon=0;
 		List<Double> results = new LinkedList<Double>();
-		for(int closingTime = 15; closingTime<=16;closingTime++){
+		for(int closingTime = 18; closingTime<=20;closingTime++){
 			double avgHealed = runValueIteration(gamma, epsilon, closingTime);
 			System.out.print("Close:"+closingTime+":00  ,"+avgHealed+"|");
 			results.add( avgHealed);	
