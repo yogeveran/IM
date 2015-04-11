@@ -20,7 +20,7 @@ public class PCPWorld {
 	public  void createStates(){
 		String fileName = "states.txt";
 		states = null;
-		if(!loadStates(fileName))
+		//if(!loadStates(fileName))
 			generateStates();
 	}
 
