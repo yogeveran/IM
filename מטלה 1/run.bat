@@ -1,2 +1,2 @@
-java -jar Assignment1.jar
+java -jar Assignment1.jar > Policy.txt
 pause
