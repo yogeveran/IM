@@ -7,7 +7,6 @@ import aima.core.agent.Action;
 import aima.core.probability.mdp.MarkovDecisionProcess;
 import aima.core.probability.mdp.impl.LookupPolicy;
 import aima.core.util.Util;
-import assignment1.*;
 
 
 /**
@@ -135,16 +134,7 @@ public class ValueIteration<S, A extends Action> {
 		return U;
 	}
 	
-	private boolean debugStates(S s, S sDelta) {
-		if(!(s instanceof State && sDelta instanceof State))
-			return false;
-		State stS = (State) s;
-		State stsDelta = (State) sDelta;
-		
-		return (stS.getPatient_status_at_doctor().equals(Disease.Flu)&&stsDelta.getPatient_status_at_doctor().equals(Disease.Unknown)&&(stS.getPatient_time_left_at_hospital()==stsDelta.getPatient_time_left_at_hospital())&&(stS.getHour()==stsDelta.getHour()));
-			
 
-	}
 
 	public A getOptimalActionForState(S curr_state)
 	{
