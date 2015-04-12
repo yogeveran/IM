@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 State [hour=14, patient_status_at_doctor=Flu, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 1.0
 State [hour=13, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=false] | Action [type=Diagnose] | 0.925
 State [hour=14, patient_status_at_doctor=Flu, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 1.0
@@ -56,4 +57,64 @@ State [hour=12, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=
 State [hour=11, patient_status_at_doctor=Cough, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 3.2607500000000007
 State [hour=10, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=false] | Action [type=Diagnose] | 3.6107500000000012
 State [hour=11, patient_status_at_doctor=Cough, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 3.7266250000000003
+=======
+State [hour=14, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 0.25
+State [hour=12, patient_status_at_doctor=Cough, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 2.3425000000000002
+State [hour=11, patient_status_at_doctor=Cough, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 3.2607500000000007
+State [hour=14, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=false] | null | 0.0
+State [hour=12, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=false] | Action [type=Diagnose] | 1.8425
+State [hour=14, patient_status_at_doctor=Cough, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 0.5
+State [hour=13, patient_status_at_doctor=Cough, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 1.425
+State [hour=13, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 1.1375000000000002
+State [hour=13, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=false] | Action [type=Diagnose] | 0.925
+State [hour=10, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 3.894837500000001
+State [hour=11, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 2.9766250000000003
+State [hour=12, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 2.0587500000000003
+State [hour=14, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=true] | null | 1.0
+State [hour=12, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=false] | Action [type=Diagnose] | 1.8425
+State [hour=11, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=false] | Action [type=Diagnose] | 2.7607500000000007
+State [hour=13, patient_status_at_doctor=Cough, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 1.8875000000000002
+State [hour=14, patient_status_at_doctor=Cough, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 1.0
+State [hour=13, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=false] | Action [type=Diagnose] | 0.925
+State [hour=10, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=false] | Action [type=Diagnose] | 3.678925000000001
+State [hour=12, patient_status_at_doctor=Cough, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 2.8087500000000003
+State [hour=11, patient_status_at_doctor=Flu, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 3.7607500000000007
+State [hour=12, patient_status_at_doctor=Flu, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendHome] | 2.8425000000000002
+State [hour=12, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=true] | Action [type=Diagnose] | 2.8425000000000002
+State [hour=12, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=true] | Action [type=Diagnose] | 2.8425000000000002
+State [hour=11, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=false] | Action [type=Diagnose] | 2.6925000000000003
+State [hour=10, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=true] | Action [type=Diagnose] | 4.610750000000001
+State [hour=11, patient_status_at_doctor=Cough, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 3.7266250000000003
+State [hour=12, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=true] | Action [type=Diagnose] | 2.7750000000000004
+State [hour=10, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=true] | Action [type=Diagnose] | 4.678925000000001
+State [hour=13, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=false] | Action [type=Diagnose] | 0.8500000000000001
+State [hour=13, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 0.925
+State [hour=14, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=false] | null | 0.0
+State [hour=14, patient_status_at_doctor=Flu, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 1.0
+State [hour=11, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 2.7607500000000007
+State [hour=10, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=true] | Action [type=Diagnose] | 4.678925000000001
+State [hour=13, patient_status_at_doctor=Flu, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendHome] | 1.925
+State [hour=11, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=false] | Action [type=Diagnose] | 2.7607500000000007
+State [hour=9, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=false] | Action [type=Diagnose] | 4.597107500000002
+State [hour=13, patient_status_at_doctor=Flu, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 1.925
+State [hour=14, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=true] | null | 1.0
+State [hour=14, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=true] | null | 1.0
+State [hour=14, patient_status_at_doctor=Flu, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 1.0
+State [hour=10, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=false] | Action [type=Diagnose] | 3.610750000000001
+State [hour=10, patient_status_at_doctor=Flu, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendHome] | 4.678925000000001
+State [hour=10, patient_status_at_doctor=Cough, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendToHospital] | 4.644837500000001
+State [hour=14, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 0.0
+State [hour=13, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=true] | Action [type=Diagnose] | 1.925
+State [hour=13, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=true] | Action [type=Diagnose] | 1.925
+State [hour=12, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=false] | Action [type=Diagnose] | 1.7750000000000001
+State [hour=13, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=true] | Action [type=Diagnose] | 1.85
+State [hour=12, patient_status_at_doctor=Flu, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 2.8425000000000002
+State [hour=10, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=false] | Action [type=Diagnose] | 3.678925000000001
+State [hour=12, patient_status_at_doctor=Ebola, patient_time_left_at_hospital=1, did_survive=false] | Action [type=SendHome] | 1.8425
+State [hour=11, patient_status_at_doctor=Flu, patient_time_left_at_hospital=0, did_survive=false] | Action [type=SendHome] | 3.7607500000000007
+State [hour=14, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=false] | null | 0.0
+State [hour=11, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=0, did_survive=true] | Action [type=Diagnose] | 3.7607500000000007
+State [hour=11, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=1, did_survive=true] | Action [type=Diagnose] | 3.7607500000000007
+State [hour=11, patient_status_at_doctor=Unknown, patient_time_left_at_hospital=2, did_survive=true] | Action [type=Diagnose] | 3.6925000000000003
+>>>>>>> b05bb5a3e4a03224b699b6d880bd8cf407da223a
 Avg Patients: 4.597107500000002
