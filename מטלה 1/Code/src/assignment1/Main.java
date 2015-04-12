@@ -18,13 +18,32 @@ public class Main {
 	public static void main(String[] args) {
 		int gamma = 1;
 		double epsilon=0;
+		//printRange(gamma, epsilon,14,14);
+		printPolicy(gamma, epsilon,14);
+	}
+
+
+	private static void printPolicy(int gamma, double epsilon,int closing) {
+		PCPWorld dw = new PCPWorld(closing);
+		ValueIteration<State, PCPAction> vi = new ValueIteration<State, PCPAction>(gamma);
+		MarkovDecisionProcess<State, PCPAction> mdp = MDPBuilder.createMDP(dw,closing);
+		
+		Map<State, Double> mp = vi.valueIteration(mdp, epsilon);
+		
+		LinkedList<State> states = new LinkedList<State>();
+		states.addAll(dw.getStates());
+		sortStates(states);
+		printStates(vi, mp, states);
+	}
+
+
+	private static void printRange(int gamma, double epsilon,int start, int end) {
 		List<Double> results = new LinkedList<Double>();
-		for(int closingTime = 18; closingTime<=20;closingTime++){
+		for(int closingTime = start; closingTime<=end;closingTime++){
 			double avgHealed = runValueIteration(gamma, epsilon, closingTime);
 			System.out.print("Close:"+closingTime+":00  ,"+avgHealed+"|");
 			results.add( avgHealed);	
 		}
-		
 	}
 
 
@@ -39,12 +58,7 @@ public class Main {
 		return mp.get(dw.getInitialState());
 	}
 
-	
-//	LinkedList<State> states = new LinkedList<State>();
-//	states.addAll(dw.getStates());
-//	sortStates(states);
-//	printStates(vi, mp, states);
-	
+
 	private static void sortStates(LinkedList<State> states) {
 		states.sort(new Comparator<State>() {
 			@Override
