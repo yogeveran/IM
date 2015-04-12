@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.agent.State;
 import aima.core.probability.mdp.MarkovDecisionProcess;
 import aima.core.probability.mdp.impl.LookupPolicy;
 import aima.core.util.Util;

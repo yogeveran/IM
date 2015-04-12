@@ -17,6 +17,7 @@ public class PCPWorld {
 	private static final State InitialState = new State(false, 0, Disease.Unknown, 9);
 	private static Set<State>  states = new HashSet<State>();
 	private int closingTime = 14;
+	
 	public  void createStates(){
 		String fileName = "states.txt";
 		states = null;

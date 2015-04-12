@@ -3,6 +3,7 @@
 	<name>IntelMachines1</name>
 	<comment></comment>
 	<projects>
+		<project>aima-core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

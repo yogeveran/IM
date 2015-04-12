@@ -53,7 +53,7 @@ public class MDPBuilder {
 	 *         empty if at a terminal state.
 	 */
 	public static ActionsFunction<State, PCPAction> createActionsFunction(
-			final PCPWorld dw, int closingTime) {
+			final PCPWorld dw, final int closingTime) {
 		
 
 		ActionsFunction<State, PCPAction> af = new ActionsFunction<State, PCPAction>() {
