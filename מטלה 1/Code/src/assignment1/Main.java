@@ -34,6 +34,8 @@ public class Main {
 		states.addAll(dw.getStates());
 		sortStates(states);
 		printStates(vi, mp, states);
+		
+		System.out.println("Avg Patients: " + mp.get(dw.getInitialState()));
 	}
 
 
