@@ -32,7 +32,7 @@ public class Main {
 		
 		LinkedList<State> states = new LinkedList<State>();
 		states.addAll(dw.getStates());
-		sortStates(states);
+		//sortStates(states);
 		printStates(vi, mp, states);
 		
 		System.out.println("Avg Patients: " + mp.get(dw.getInitialState()));
@@ -61,37 +61,37 @@ public class Main {
 	}
 
 
-	private static void sortStates(LinkedList<State> states) {
-		states.sort(new Comparator<State>() {
-			@Override
-			public int compare(State o1, State o2) {
-				if(o1 == null)
-		        	return 1;
-				if(o2 == null)
-		        	return -1;
-		        
-		        if(o1.hour<o2.hour)
-		        	return -1;
-		        if(o1.hour>o2.hour)
-		        	return 1;
-		        
-		        if(!o1.patient_status_at_doctor.equals(o2.patient_status_at_doctor))
-		        	return orderDisease(o1.patient_status_at_doctor,o2.patient_status_at_doctor);
-		        
-		        if(o1.patient_time_left_at_hospital<o2.patient_time_left_at_hospital)
-		        	return -1;
-		        if(o2.patient_time_left_at_hospital<o1.patient_time_left_at_hospital)
-		        	return 1;
-		        
-		        return o1.did_survive ? (o2.did_survive ? 0: -1) : (o2.did_survive ? 1: 0); 
-		        
-			}
-			private int orderDisease(Disease patient_status_at_doctor2,
-					Disease patient_status_at_doctor3) {
-				return patient_status_at_doctor2.ordinal()<patient_status_at_doctor3.ordinal() ? -1 : 1;
-			} 
-		});
-	}
+//	private static void sortStates(LinkedList<State> states) {
+//		states.sort(new Comparator<State>() {
+//			@Override
+//			public int compare(State o1, State o2) {
+//				if(o1 == null)
+//		        	return 1;
+//				if(o2 == null)
+//		        	return -1;
+//		        
+//		        if(o1.hour<o2.hour)
+//		        	return -1;
+//		        if(o1.hour>o2.hour)
+//		        	return 1;
+//		        
+//		        if(!o1.patient_status_at_doctor.equals(o2.patient_status_at_doctor))
+//		        	return orderDisease(o1.patient_status_at_doctor,o2.patient_status_at_doctor);
+//		        
+//		        if(o1.patient_time_left_at_hospital<o2.patient_time_left_at_hospital)
+//		        	return -1;
+//		        if(o2.patient_time_left_at_hospital<o1.patient_time_left_at_hospital)
+//		        	return 1;
+//		        
+//		        return o1.did_survive ? (o2.did_survive ? 0: -1) : (o2.did_survive ? 1: 0); 
+//		        
+//			}
+//			private int orderDisease(Disease patient_status_at_doctor2,
+//					Disease patient_status_at_doctor3) {
+//				return patient_status_at_doctor2.ordinal()<patient_status_at_doctor3.ordinal() ? -1 : 1;
+//			} 
+//		});
+//	}
 
 	private static void printStates(ValueIteration<State, PCPAction> vi,Map<State, Double> mp, LinkedList<State> states) {
 		for(State s:states)
