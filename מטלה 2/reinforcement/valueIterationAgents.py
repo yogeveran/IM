@@ -68,7 +68,11 @@ class ValueIterationAgent(ValueEstimationAgent):
       to derive it on the fly.
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    #util.raiseNotDefined()
+    aSum = 0
+    for (nextState,TransferProbability) in self.mdp.getTransitionStatesAndProbs(state, action):
+        aSum += TransferProbability * (self.mdp.getReward(state, action, nextState) + (self.discount * self.values[nextState]))
+    return aSum
 
   def getPolicy(self, state):
     """
