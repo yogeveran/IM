@@ -45,11 +45,17 @@ def question3e():
   return answerDiscount, answerNoise, answerLivingReward
   # If not possible, return 'NOT POSSIBLE'
 
+
+from cStringIO import StringIO
+import sys
+
+old_stdout = sys.stdout
+sys.stdout = mystdout = StringIO()
+
 def question6():
   answerEpsilon = None
   answerLearningRate = None
-  return answerEpsilon, answerLearningRate
-  # If not possible, return 'NOT POSSIBLE'
+  return 'NOT POSSIBLE'
   
 if __name__ == '__main__':
   print 'Answers to analysis questions:'
