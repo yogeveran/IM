@@ -14,6 +14,22 @@ Record:        Win, Win, Win
 Training 9  
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
+epsilon=0.2,alpha=0.5 
+Training 1  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+Training 3  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+Training 5  
+Win Rate:      2/3 (0.67)
+Record:        Loss, Win, Win
+Training 7  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+Training 9  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
 epsilon=0.2,alpha=0.8 
 Training 1  
 Win Rate:      3/3 (1.00)
@@ -25,12 +41,12 @@ Training 5
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
 Training 7  
-Win Rate:      3/3 (1.00)
-Record:        Win, Win, Win
+Win Rate:      2/3 (0.67)
+Record:        Win, Loss, Win
 Training 9  
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
-epsilon=0.8,alpha=0.2 
+epsilon=0.5,alpha=0.2 
 Training 1  
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
@@ -44,8 +60,8 @@ Training 7
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
 Training 9  
-Win Rate:      3/3 (1.00)
-Record:        Win, Win, Win
+Win Rate:      1/3 (0.33)
+Record:        Win, Loss, Loss
 epsilon=0.5,alpha=0.5 
 Training 1  
 Win Rate:      3/3 (1.00)
@@ -54,11 +70,59 @@ Training 3
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
 Training 5  
+Win Rate:      2/3 (0.67)
+Record:        Loss, Win, Win
+Training 7  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+Training 9  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+epsilon=0.5,alpha=0.8 
+Training 1  
+Win Rate:      2/3 (0.67)
+Record:        Win, Loss, Win
+Training 3  
+Win Rate:      2/3 (0.67)
+Record:        Loss, Win, Win
+Training 5  
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
 Training 7  
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
+Training 9  
+Win Rate:      2/3 (0.67)
+Record:        Loss, Win, Win
+epsilon=0.8,alpha=0.2 
+Training 1  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+Training 3  
+Win Rate:      2/3 (0.67)
+Record:        Loss, Win, Win
+Training 5  
+Win Rate:      2/3 (0.67)
+Record:        Loss, Win, Win
+Training 7  
+Win Rate:      2/3 (0.67)
+Record:        Win, Loss, Win
+Training 9  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+epsilon=0.8,alpha=0.5 
+Training 1  
+Win Rate:      2/3 (0.67)
+Record:        Win, Loss, Win
+Training 3  
+Win Rate:      2/3 (0.67)
+Record:        Win, Win, Loss
+Training 5  
+Win Rate:      3/3 (1.00)
+Record:        Win, Win, Win
+Training 7  
+Win Rate:      2/3 (0.67)
+Record:        Win, Loss, Win
 Training 9  
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
@@ -70,8 +134,8 @@ Training 3
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
 Training 5  
-Win Rate:      3/3 (1.00)
-Record:        Win, Win, Win
+Win Rate:      2/3 (0.67)
+Record:        Loss, Win, Win
 Training 7  
 Win Rate:      3/3 (1.00)
 Record:        Win, Win, Win
